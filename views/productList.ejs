@@ -1,0 +1,8 @@
+<%- include('layout', { title: 'Product List' }) %>
+
+<h2>Product List</h2>
+<ul>
+    <% products.forEach(product => { %>
+        <li><%= product.name %> - <%= product.quantity %> units</li>
+    <% }); %>
+</ul>
