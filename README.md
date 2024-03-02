@@ -1,37 +1,148 @@
-# Inventory-Tracker
-GitHub Repository
-Link to your project's GitHub repository here
-https://github.com/Ebennett1/Inventory-Tracker
+# Inventory Tracker
+# Introduction
 
-User Stories:
+Welcome to Inventory Tracker, a web application designed to help you manage your inventory efficiently. This README will guide you through setting up and using the application.
 
-As a user, I want to add new products to my inventory, so that I can keep track of the items I have in stock.
+## Table of Contents
 
-As a user, I want to update the quantity of existing products in my inventory, so that I can accurately reflect changes in stock levels.
+- [Demo](#demo)
+- [Features](#features)
+- [How to Play](#how-to-play)
+- [Game Rules](#game-rules)
+- [Getting Started / Install Instructions](#getting-started--install-instructions)
+- [Technologies Used](#technologies-used)
+- [User Stories](#user-stories)
+- [Wireframes](#wireframes)
+- [Unsolved Problems](#unsolved-problems)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+- [Acknowledgements](#acknowledgements)
 
-As a user, I want to search for specific products in the inventory, so that I can quickly locate items for customers.
 
-As a user, I want to categorize products by type or department, so that I can organize the inventory more efficiently.
 
-As a user, I want to delete obsolete products from the inventory, so that I can maintain an up-to-date record of available items.
+You can check out the live demo of the Inventory Tracker [here]().
 
-As a user, I want to view detailed information about each product, including description and price, so that I can provide accurate information to customers.
+## Features
 
-As a user, I want to log in to the inventory management system using my username and password, so that I can securely access and manage inventory data.
+- User-friendly interface for managing inventory.
+- User authentication for secure access.
+- CRUD functionality for adding, updating, and deleting products.
+- Basic product details (name, quantity, category) displayed in a list.
+- Search functionality by name or category.
+- Data validation to prevent input errors.
+- Product categorization by type or department.
+- Deployment on a hosting platform.
 
-MVP Goals (How your specific project will look & behave in order to accomplish MVP)
-Create a web application with a user-friendly interface for managing inventory.
-Implement user authentication to secure access to the inventory management system.
-Implement CRUD functionality for adding, updating, and deleting products.
-Display a list of products with basic details (name, quantity, category).
-Provide search functionality to find products by name or category.
-Ensure data validation to prevent errors in user input.
-Allow users to categorize products by type or department.
-Deploy the application to a hosting platform for accessibility.
-Stretch Goals (How your specific project look & behave AFTER you accomplish MVP)
-Enhance the search feature with advanced filtering options and sorting capabilities.
+## Stretch Goals
 
-Enable notifications or alerts for low stock levels or out-of-stock items.
+1. Enhanced search with advanced filtering and sorting.
 
-Develop a mobile application version for on-the-go inventory management.
+2. Notifications for low stock levels or out-of-stock items.
 
+3. Mobile application version for on-the-go inventory management.
+
+
+## Getting Started / Install instructions
+
+To run this project locally, follow these steps:
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/Ebennett1/Inventory-Tracker.git
+
+```
+
+2. Navigate to the project directory:
+
+      cd Inventory-Tracker
+
+3. Install dependencies:
+
+      npm install
+
+
+
+
+## Technologies
+
+The Simon Game project uses the following technologies:
+
+- HTML
+- CSS
+- JavaScript
+
+# User Stories
+
+1. **As a user, I want to add new products to my inventory, so that I can keep track of the items I have in stock..**
+   
+
+2. **As a user, I want to update the quantity of existing products in my inventory, so that I can accurately reflect changes in stock levels.**
+   
+
+3. **As a user, I want to search for specific products in the inventory, so that I can quickly locate items for customers.**
+  
+
+4. **As a user, I want to categorize products by type or department, so that I can organize the inventory more efficiently.**
+
+
+5. **As a user, I want to delete obsolete products from the inventory, so that I can maintain an up-to-date record of available items.** 
+
+
+6. **As a user, I want to view detailed information about each product, including description and price, so that I can provide accurate information to customers.**
+
+
+7. **As a user, I want to log in to the inventory management system using my username and password, so that I can securely access and manage inventory data.**
+
+  
+
+## Wireframes
+
+
+![Demo Screenshot1]()
+
+
+
+
+
+## Contributing
+
+If you'd like to contribute to this project, please follow these guidelines:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix: `git checkout -b feature-name`.
+3. Commit your changes: `git commit -m 'Add some feature'`.
+4. Push to the branch: `git push origin feature-name`.
+5. Submit a pull request.
+
+
+## License
+
+Distributed under the MIT License. See [LICENSE.txt] for more information.
+
+
+
+## Contact
+
+For any inquiries or feedback, please contact the project maintainer:
+
+- **Evonte Bennett**
+- Email: @Evontebennett14@gmail.com
+
+Project Link: https://github.com/Ebennett1/Inventory-Tracker
+
+Feel free to reach out if you have questions, suggestions, or just want to chat!
+
+**Enjoy the Game!**
+
+Thank you for checking out the Simon Game project. Have fun playing, and happy coding!
+
+
+## Acknowledgements
+
+- https://imgur.com/ : For image URL retrieval
+
+- https://chat.openai.com/ : For Questions & debugging
+
+- https://www.markdownguide.org/cheat-sheet/ :For Completion of README.md
