@@ -82,10 +82,12 @@ The Inventory Tracker project uses the following technologies:
 
   
 
-## Wireframes
+## Wireframes/ ERD
 
 
-![Demo Screenshot1]()
+![Imgur Screenshot1](https://i.imgur.com/OSDRSKw.jpg)
+
+![Imgur) Screenshot1](https://i.imgur.com/kaLWgem.jpg)
 
 
 
