@@ -3,21 +3,6 @@
 
 Welcome to Inventory Tracker, a web application designed to help you manage your inventory efficiently. This README will guide you through setting up and using the application.
 
-## Table of Contents
-
-- [Demo](#demo)
-- [Features](#features)
-- [How to Play](#how-to-play)
-- [Game Rules](#game-rules)
-- [Getting Started / Install Instructions](#getting-started--install-instructions)
-- [Technologies Used](#technologies-used)
-- [User Stories](#user-stories)
-- [Wireframes](#wireframes)
-- [Unsolved Problems](#unsolved-problems)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
-- [Acknowledgements](#acknowledgements)
 
 
 
