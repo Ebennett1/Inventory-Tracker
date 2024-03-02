@@ -40,13 +40,13 @@ git clone https://github.com/Ebennett1/Inventory-Tracker.git
 ```
 
 2. Navigate to the project directory:
-
+```bash
       cd Inventory-Tracker
-
+```
 3. Install dependencies:
-
+```bash
       npm install
-
+```
 
 
 
