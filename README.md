@@ -52,11 +52,11 @@ git clone https://github.com/Ebennett1/Inventory-Tracker.git
 
 ## Technologies
 
-The Simon Game project uses the following technologies:
+The Inventory Tracker project uses the following technologies:
 
-- HTML
-- CSS
-- JavaScript
+- 
+- 
+- 
 
 # User Stories
 
@@ -118,10 +118,6 @@ For any inquiries or feedback, please contact the project maintainer:
 Project Link: https://github.com/Ebennett1/Inventory-Tracker
 
 Feel free to reach out if you have questions, suggestions, or just want to chat!
-
-**Enjoy the Game!**
-
-Thank you for checking out the Simon Game project. Have fun playing, and happy coding!
 
 
 ## Acknowledgements
