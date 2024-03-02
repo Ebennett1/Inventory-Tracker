@@ -3,12 +3,12 @@ const db = require('./models');
 const path = require('path');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-
-
-
-
 const app = express()
 const port = 3000
+
+const usersRouter = require('./routes/users');
+const productsRouter = require('./routes/products');
+const categoriesRouter = require('./routes/categories');
 
 
 
@@ -18,7 +18,9 @@ app.use(express.json()); // Middleware to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
 app.use(express.static(path.join(__dirname, 'public'))); // Middleware to serve static files
-
+app.use('/api/users', usersRouter);
+app.use('/api/products', productsRouter);
+app.use('/api/categories', categoriesRouter);
 
 // Ejs setup
 app.set('views', path.join(__dirname, 'views'));
