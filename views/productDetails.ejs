@@ -1,0 +1,33 @@
+<%- include('layout', { title: 'Product Details' }) %>
+
+<h1><%= product.name %></h1>
+
+<div>
+    <h2>Description:</h2>
+    <p><%= product.description %></p>
+</div>
+
+<div>
+    <h2>Price:</h2>
+    <p>$<%= product.price %></p>
+</div>
+
+<div>
+    <h2>Quantity in Stock:</h2>
+    <p><%= product.quantity %></p>
+</div>
+
+<div>
+    <h2>Category:</h2>
+    <p><%= product.category.name %></p>
+</div>
+
+<div>
+    <!-- Action buttons for editing or deleting the product -->
+    <a href="/products/<%= product._id %>/edit">Edit Product</a>
+    <form action="/products/<%= product._id %>/delete" method="POST">
+        <button type="submit">Delete Product</button>
+    </form>
+</div>
+
+<a href="/products">Back to Product List</a>

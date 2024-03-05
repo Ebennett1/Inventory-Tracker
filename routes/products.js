@@ -2,6 +2,21 @@ const express = require('express');
 const router = express.Router();
 const { Product } = require('../models');
 
+// Middleware function to get a single product by ID
+async function getProduct(req, res, next) {
+  let product;
+  try {
+      product = await Product.findById(req.params.id);
+      if (product == null) {
+          return res.status(404).json({ message: 'Product not found' });
+      }
+  } catch (err) {
+      return res.status(500).json({ message: err.message });
+  }
+  res.product = product;
+  next();
+}
+
 // Create a new product
 router.post('/', async (req, res) => {
   try {
@@ -12,19 +27,19 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Get all products
+// Get all products - Render products.ejs view
 router.get('/', async (req, res) => {
   try {
-    const products = await Product.find();
-    res.json(products);
+      const products = await Product.find();
+      res.render('products', { products });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+      res.status(500).json({ message: err.message });
   }
 });
 
-// Get a single product
+// Get a single product - Render product-details.ejs view
 router.get('/:id', getProduct, (req, res) => {
-  res.json(res.product);
+  res.render('productDetails', { product: res.product });
 });
 
 // Update a product

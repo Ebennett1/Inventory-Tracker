@@ -3,6 +3,7 @@ const db = require('./models');
 const path = require('path');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const expressLayouts = require('express-ejs-layouts');
 const app = express();
 const port = 3000;
 
@@ -15,7 +16,7 @@ app.use(methodOverride('_method')); // Allows using other HTTP methods such as P
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
 app.use(express.static(path.join(__dirname, 'public'))); // Middleware to serve static files
-
+app.use(expressLayouts);
 // Routes
 app.use('/api/users', usersRouter);
 app.use('/api/products', productsRouter);
@@ -23,6 +24,7 @@ app.use('/api/categories', categoriesRouter);
 
 // EJS setup
 app.set('view engine', 'ejs');
+
 app.set('views', path.join(__dirname, 'views'));
 
 
@@ -31,15 +33,18 @@ app.get('/dashboard', (req, res) => {
   res.render('dashboard', { title: 'Dashboard', body: 'Dashboard content goes here' });
 });
 
-
 app.get('/products', async (req, res, next) => {
   try {
     const products = await db.Product.find();
-    res.render('productList', { title: 'Product List', body: products });;
+    console.log(JSON.stringify(products, null, 2)); // Log products in a readable format
+    res.render('productList', { title: 'Product List', products: products, body: {} });
   } catch (err) {
-    next(err); // Pass the error to the error handling middleware
+    next(err);
   }
 });
+
+
+
 
 app.get('/products/add', (req, res) => {
   res.render('productForm', { title: 'Add Product', body: {} }); // Passing an empty object as the body

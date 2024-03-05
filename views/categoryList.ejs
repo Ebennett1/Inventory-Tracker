@@ -1,0 +1,9 @@
+<%- include('layout', { title: 'Categories' }) %>
+<h2>All Categories</h2>
+<ul>
+  <% categories.forEach(category => { %>
+    <li>
+      <a href="/categories/<%= category._id %>"><%= category.name %></a>
+    </li>
+  <% }); %>
+</ul>
