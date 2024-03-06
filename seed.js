@@ -1,5 +1,3 @@
-// seed.js
-
 const mongoose = require('mongoose');
 const Product = require('./models/product');
 const Category = require('./models/category');
@@ -11,7 +9,7 @@ mongoose.connect(process.env.MONGODBURI, {
   useUnifiedTopology: true,
 });
 
-// Define random product names
+// Define random product names, descriptions, and categories
 const productNames = [
   'Smartphone', 'Laptop', 'Headphones', 'Camera', 'Smartwatch',
   'Tablet', 'Bluetooth Speaker', 'Gaming Console', 'Drone', 'Fitness Tracker',
@@ -19,7 +17,6 @@ const productNames = [
   'Printer', 'Projector', 'Router', 'Keyboard', 'Mouse', 'Graphics Card'
 ];
 
-// Define random product descriptions
 const productDescriptions = [
   'High-quality', 'Durable', 'Sleek design', 'Advanced features', 'Portable',
   'Wireless connectivity', 'Long battery life', 'High-resolution display',
@@ -28,7 +25,6 @@ const productDescriptions = [
   'Expandable storage', 'User-friendly interface', 'Stylish'
 ];
 
-// Define random product categories
 const productCategories = [
   'Electronics', 'Computers', 'Audio', 'Cameras', 'Wearables',
   'Accessories', 'Gaming', 'Drones', 'Fitness', 'Storage',
@@ -40,33 +36,47 @@ function getRandomPrice(min, max) {
   return (Math.random() * (max - min) + min).toFixed(2);
 }
 
-// Generate random products
+// Generate random products without duplicates
 const generateRandomProducts = async () => {
   const products = [];
-  for (let i = 1; i <= 20; i++) {
-    const name = productNames[Math.floor(Math.random() * productNames.length)];
-    const description = productDescriptions[Math.floor(Math.random() * productDescriptions.length)];
-    // Fetch a random category from the database
-    const category = await Category.findOne().skip(Math.floor(Math.random() * productCategories.length));
-    const price = getRandomPrice(10, 1000);
-    const quantity = Math.floor(Math.random() * 100) + 1; // Random quantity between 1 and 100
-    products.push({ name, description, category: category._id, price, quantity });
+  try {
+    const categories = await Category.find();
+    const generatedNames = new Set(); // Keep track of generated names to avoid duplicates
+    while (products.length < 20) { // Generate 20 unique products
+      const name = productNames[Math.floor(Math.random() * productNames.length)];
+      if (!generatedNames.has(name)) {
+        const description = productDescriptions[Math.floor(Math.random() * productDescriptions.length)];
+        const category = categories[Math.floor(Math.random() * categories.length)];
+        const price = getRandomPrice(10, 1000);
+        const quantity = Math.floor(Math.random() * 100) + 1;
+        products.push({ name, description, category: category._id, price, quantity });
+        generatedNames.add(name);
+      }
+    }
+  } catch (err) {
+    console.error('Error generating random products:', err);
   }
   return products;
 };
 
-// Insert initial products into the database
-const seed = async () => {
+
+// Reseed the database
+const reseedDatabase = async () => {
   try {
-    await Product.deleteMany(); // Clear existing data
+    // Clear existing data
+    await Product.deleteMany();
+    // Generate new products
     const products = await generateRandomProducts();
-    await Product.insertMany(products); // Insert new data
-    console.log('Data seeded successfully');
-  } catch (err) {
-    console.error('Error seeding data:', err);
+    // Insert new products into the database
+    await Product.insertMany(products);
+    console.log('Database reseeded successfully.');
+  } catch (error) {
+    console.error('Error reseeding database:', error);
   } finally {
-    mongoose.disconnect(); // Disconnect from MongoDB
+    // Disconnect from MongoDB
+    mongoose.disconnect();
   }
 };
 
-seed(); // Execute the seed function
+// Execute the reseeding function
+reseedDatabase();

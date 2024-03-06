@@ -3,7 +3,6 @@ const db = require('./models');
 const path = require('path');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-const expressLayouts = require('express-ejs-layouts');
 const app = express();
 const port = 3000;
 
@@ -16,10 +15,10 @@ app.use(methodOverride('_method')); // Allows using other HTTP methods such as P
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
 app.use(express.static(path.join(__dirname, 'public'))); // Middleware to serve static files
-app.use(expressLayouts);
 // Routes
 app.use('/api/users', usersRouter);
-app.use('/api/products', productsRouter);
+app.use('/products', productsRouter);
+// app.use('/api/products', productsRouter);
 app.use('/api/categories', categoriesRouter);
 
 // EJS setup
@@ -33,22 +32,42 @@ app.get('/dashboard', (req, res) => {
   res.render('dashboard', { title: 'Dashboard', body: 'Dashboard content goes here' });
 });
 
-app.get('/products', async (req, res, next) => {
-  try {
-    const products = await db.Product.find();
-    console.log(JSON.stringify(products, null, 2)); // Log products in a readable format
-    res.render('productList', { title: 'Product List', products: products, body: {} });
-  } catch (err) {
-    next(err);
-  }
-});
-
-
+// app.get('/products', async (req, res, next) => {
+//   try {
+//     const products = await db.Product.find();
+//     console.log(JSON.stringify(products, null, 2)); // Log products in a readable format
+//     res.render('productList', { title: 'Product List', products: products, body: {} });
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 
 app.get('/products/add', (req, res) => {
-  res.render('productForm', { title: 'Add Product', body: {} }); // Passing an empty object as the body
+  res.render('addProductForm', { title: 'Add Product', body: {} }); // Passing an empty object as the body
 });
+
+// app.get('/products/:id', async (req, res, next) => {
+//   try {
+//     const productId = req.params.id;
+//     const product = await db.Product.findById(productId);
+
+//     if (!product) {
+//       // If product is not found, return 404 status and render an error view
+//       return res.status(404).render('error', { message: 'Product not found' });
+//     }
+
+//     // Render the productDetails view and pass the product data
+//     res.render('productDetails', { title: 'Product Details', product, body: {} });
+//   } catch (err) {
+//     // Pass the error to the error handling middleware
+//     next(err);
+//   }
+// });
+
+
+
+
 
 
 
@@ -66,3 +85,12 @@ app.listen(port, () => {
 
 
 
+//Next steps 
+// find out why routes only working in server.js/** semi fixed---- need to fix add product form rendering
+// adding to inventory feature with inventory show page
+// make sure edit delete functions work
+// add necessary nav bars such as category and display the categories, and display products in said category
+//add images
+//work or login/registration views and functionality
+//CSS
+// CheckList
