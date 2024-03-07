@@ -32,44 +32,6 @@ app.get('/dashboard', (req, res) => {
   res.render('dashboard', { title: 'Dashboard', body: 'Dashboard content goes here' });
 });
 
-// app.get('/products', async (req, res, next) => {
-//   try {
-//     const products = await db.Product.find();
-//     console.log(JSON.stringify(products, null, 2)); // Log products in a readable format
-//     res.render('productList', { title: 'Product List', products: products, body: {} });
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
-
-app.get('/products/add', (req, res) => {
-  res.render('addProductForm', { title: 'Add Product', body: {} }); // Passing an empty object as the body
-});
-
-// app.get('/products/:id', async (req, res, next) => {
-//   try {
-//     const productId = req.params.id;
-//     const product = await db.Product.findById(productId);
-
-//     if (!product) {
-//       // If product is not found, return 404 status and render an error view
-//       return res.status(404).render('error', { message: 'Product not found' });
-//     }
-
-//     // Render the productDetails view and pass the product data
-//     res.render('productDetails', { title: 'Product Details', product, body: {} });
-//   } catch (err) {
-//     // Pass the error to the error handling middleware
-//     next(err);
-//   }
-// });
-
-
-
-
-
-
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -86,7 +48,6 @@ app.listen(port, () => {
 
 
 //Next steps 
-// find out why routes only working in server.js/** semi fixed---- need to fix add product form rendering
 // adding to inventory feature with inventory show page
 // make sure edit delete functions work
 // add necessary nav bars such as category and display the categories, and display products in said category
