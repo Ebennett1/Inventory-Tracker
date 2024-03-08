@@ -1,14 +1,16 @@
 // controllers/productController.js
-const { Product } = require('../models');
+const { Product, Category } = require('../models');
 
 
 async function renderAddProductForm(req, res) {
   try {
-    res.render('addProductForm', { title: 'Add Product', body: {} });
+    const categories = await Category.find(); 
+    res.render('addProductForm', { title: 'Add Product', categories, body: {} });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 }
+
 
 async function createProduct(req, res) {
   try {
@@ -21,7 +23,7 @@ async function createProduct(req, res) {
 
 async function getAllProducts(req, res) {
   try {
-    const products = await Product.find();
+    const products = await Product.find().populate('category');
     console.log(JSON.stringify(products, null, 2));
     res.render('productList', { products, body: {} });
   } catch (err) {
@@ -29,9 +31,10 @@ async function getAllProducts(req, res) {
   }
 }
 
+
 async function getProductById(req, res) {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate('category');
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }

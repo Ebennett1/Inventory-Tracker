@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public'))); // Middleware to serve 
 app.use('/api/users', usersRouter);
 app.use('/products', productsRouter);
 // app.use('/api/products', productsRouter);
-app.use('/api/categories', categoriesRouter);
+app.use('/categories', categoriesRouter);
 
 // EJS setup
 app.set('view engine', 'ejs');
