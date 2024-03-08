@@ -15,7 +15,8 @@ async function renderAddProductForm(req, res) {
 async function createProduct(req, res) {
   try {
     const product = await Product.create(req.body);
-    res.status(201).json(product);
+     // Redirect to the details page of the newly created product
+     res.redirect(`/products/${product._id}`);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -48,27 +49,68 @@ async function getProductById(req, res) {
 
 async function updateProduct(req, res) {
   try {
-    if (req.body.name != null) {
-      res.product.name = req.body.name;
+    const productId = req.params.id;
+    const { name, description, price, quantity, category } = req.body;
+
+    // Find the product by ID and update its details
+    const updatedProduct = await Product.findByIdAndUpdate(productId, {
+      name,
+      description,
+      price,
+      quantity,
+      category
+    }, { new: true });
+
+    // Check if the product exists
+    if (!updatedProduct) {
+      return res.status(404).json({ message: 'Product not found' });
     }
-    if (req.body.description != null) {
-      res.product.description = req.body.description;
-    }
-    // Update other fields as needed
-    const updatedProduct = await res.product.save();
-    res.json(updatedProduct);
+
+    // Redirect to the updated product details page
+    res.redirect(`/products/${updatedProduct._id}`);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 }
 
-async function deleteProduct(req, res) {
+
+async function renderEditProductForm(req, res) {
   try {
-    await res.product.remove();
-    res.json({ message: 'Product deleted' });
+    // Retrieve the product details based on the provided product ID
+    const productId = req.params.id;
+    const product = await Product.findById(productId).populate('category');
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    // Retrieve categories for dropdown menu
+    const categories = await Category.find();
+
+    // Render the edit product form view
+    res.render('editProductForm', { title: 'Edit Product', product, categories });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+}
+
+async function deleteProduct(req, res) {
+  try {
+    const productId = req.params.id;
+
+    // Find the product by ID and delete it
+    const deletedProduct = await Product.findByIdAndDelete(productId);
+
+    // Check if the product exists
+    if (!deletedProduct) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+  // Redirect to the product list page
+  res.redirect('/products');
+} catch (err) {
+  res.status(500).json({ message: err.message });
+}
 }
 
 module.exports = {
@@ -78,4 +120,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   renderAddProductForm,
+  renderEditProductForm
 };

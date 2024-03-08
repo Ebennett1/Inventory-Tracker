@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product</title>
+</head>
+<body>
+    <h1>Edit Product</h1>
+
+    <form action="/products/edit/<%= product._id %>?_method=PUT" method="POST">
+        <!-- Input fields for editing product details -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="<%= product.name %>"><br>
+        
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"><%= product.description %></textarea><br>
+        
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" value="<%= product.price %>"><br>
+        
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" value="<%= product.quantity %>"><br>
+
+       
+        <label for="category">Category:</label>
+        <select id="category" name="category">
+            <% categories.forEach(category => { %>
+                <option value="<%= category._id %>" <%= (product.category && product.category.equals(category._id)) ? 'selected' : '' %>><%= category.name %></option>
+            <% }) %>
+        </select><br>
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <a id="detailsLink" href="/products/<%= product._id %>">Back to Product Details</a>
+</body>
+</html>
