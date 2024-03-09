@@ -10,6 +10,8 @@ const usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products');
 const categoriesRouter = require('./routes/categories');
 
+
+
 // Middleware
 app.use(methodOverride('_method')); // Allows using other HTTP methods such as PUT and DELETE
 app.use(express.json()); // Middleware to parse JSON bodies
@@ -18,8 +20,10 @@ app.use(express.static(path.join(__dirname, 'public'))); // Middleware to serve 
 // Routes
 app.use('/api/users', usersRouter);
 app.use('/products', productsRouter);
-// app.use('/api/products', productsRouter);
 app.use('/categories', categoriesRouter);
+
+
+
 
 // EJS setup
 app.set('view engine', 'ejs');
@@ -48,10 +52,18 @@ app.listen(port, () => {
 
 
 //Next steps 
-// adding to inventory feature with inventory show page
-// make sure edit delete functions work
-// add necessary nav bars such as category and display the categories, and display products in said category
-//add images
-//work or login/registration views and functionality
-//CSS
+// Adding to inventory feature with inventory show page debugging => things to debug:
+
+// Inventory nav bar----- "Cast to ObjectId failed for value \"inventory\" (type string) at path \"_id\" for model \"Product\"  --------- Do i need to add inventory Schema??
+
+// Add to inventory button functionality-------- "Cannot POST /inventory/add"
+
+
+// Then: =>>>
+// Add necessary nav bars such as category and display the categories, and display products 
+// in said category
+
+// Add Images--- Reseeding
+// Work on login/registration views and functionality
+// CSS
 // CheckList

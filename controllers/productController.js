@@ -22,6 +22,7 @@ async function createProduct(req, res) {
   }
 }
 
+
 async function getAllProducts(req, res) {
   try {
     const products = await Product.find().populate('category');
@@ -94,6 +95,80 @@ async function renderEditProductForm(req, res) {
   }
 }
 
+
+async function addToInventory(req, res) {
+  try {
+    // Retrieve productId and quantityToAdd from the form submission
+    const { productId, quantityToAdd } = req.body;
+
+    // Find the product by ID
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    // Update the product's quantity
+    product.quantity += parseInt(quantityToAdd, 10); // Parse quantityToAdd as integer
+    // Mark the product as added to inventory
+    product.addedToInventory = true;
+    // Save the updated product to the database
+    await product.save();
+
+    // Redirect the user to the inventory page after adding the product
+    res.redirect('/products/inventory');
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+
+
+async function renderInventoryPage(req, res) {
+  try {
+    // Retrieve products with addedToInventory set to true from the database
+    const inventory = await Product.find({ addedToInventory: true });
+
+    // Render the inventory page with products that are added to inventory
+    res.render('inventory', { inventory });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+
+// controllers/productController.js
+
+async function deleteFromInventory(req, res) {
+  try {
+    const productId = req.params.id;
+
+    // Find the product by ID
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    // Mark the product as deleted from inventory
+    product.addedToInventory = false;
+    // Save the updated product to the database
+    await product.save();
+
+    // Redirect the user to the inventory page after deleting the product
+    res.redirect('/products/inventory');
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+
+
+
+
+
+
+
+
+
 async function deleteProduct(req, res) {
   try {
     const productId = req.params.id;
@@ -120,5 +195,8 @@ module.exports = {
   updateProduct,
   deleteProduct,
   renderAddProductForm,
-  renderEditProductForm
+  renderEditProductForm,
+  addToInventory,
+  renderInventoryPage,
+  deleteFromInventory
 };

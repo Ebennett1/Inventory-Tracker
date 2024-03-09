@@ -7,7 +7,12 @@
             <a href="/products/<%= product._id %>">
                 <h3><%= product.name %></h3>
             </a>
-            
+            <!-- Add to Inventory button -->
+            <form action="/products/inventory/add" method="POST">
+                <input type="hidden" name="productId" value="<%= product._id %>">
+                <input type="number" name="quantityToAdd" placeholder="Quantity to add" required>
+                <button type="submit">Add to Inventory</button>
+            </form>
         </div>
     <% }); %>
 </div>
