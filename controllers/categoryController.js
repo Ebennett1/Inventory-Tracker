@@ -12,11 +12,27 @@ async function createCategory(req, res) {
 async function getAllCategories(req, res) {
   try {
     const categories = await Category.find();
-    res.json(categories);
+    res.render('categoryList', { categories, body: {} })
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 }
+
+
+async function getProductsByCategory(req, res) {
+  try {
+    const categoryId = req.params.id;
+    const category = await Category.findById(categoryId).populate('products');
+    if (!category) {
+      return res.status(404).json({ message: 'Category not found' });
+    }
+    res.render('categoryProducts', { category });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+
 
 async function getCategoryById(req, res, next) {
   let category;
@@ -59,4 +75,5 @@ module.exports = {
   getCategoryById,
   updateCategory,
   deleteCategory,
+  getProductsByCategory
 };

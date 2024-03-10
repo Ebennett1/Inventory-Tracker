@@ -8,6 +8,7 @@ router.get('/', categoryController.getAllCategories);
 router.get('/:id', categoryController.getCategoryById, (req, res) => {
   res.json(res.category);
 });
+router.get('/:id/products', categoryController.getProductsByCategory);
 router.patch('/:id', categoryController.getCategoryById, categoryController.updateCategory);
 router.delete('/:id', categoryController.getCategoryById, categoryController.deleteCategory);
 

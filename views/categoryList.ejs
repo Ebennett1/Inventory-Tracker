@@ -1,9 +1,11 @@
-<%- include('layout', { title: 'Categories' }) %>
-<h2>All Categories</h2>
+<!-- categoryList.ejs -->
+
+<%- include('layout', { title: 'Category List' }) %>
+
+<h2>Category List</h2>
+
 <ul>
-  <% categories.forEach(category => { %>
-    <li>
-      <a href="/categories/<%= category._id %>"><%= category.name %></a>
-    </li>
-  <% }); %>
+    <% categories.forEach(category => { %>
+        <li><a href="/categories/<%= category._id %>"><%= category.name %></a></li>
+    <% }); %>
 </ul>

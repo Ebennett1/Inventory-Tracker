@@ -37,6 +37,7 @@ app.get('/dashboard', (req, res) => {
 });
 
 
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -52,15 +53,8 @@ app.listen(port, () => {
 
 
 //Next steps 
-// Adding to inventory feature with inventory show page debugging => things to debug:
 
-// Inventory nav bar----- "Cast to ObjectId failed for value \"inventory\" (type string) at path \"_id\" for model \"Product\"  --------- Do i need to add inventory Schema??
-
-// Add to inventory button functionality-------- "Cannot POST /inventory/add"
-
-
-// Then: =>>>
-// Add necessary nav bars such as category and display the categories, and display products 
+// display products 
 // in said category
 
 // Add Images--- Reseeding

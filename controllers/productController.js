@@ -12,6 +12,8 @@ async function renderAddProductForm(req, res) {
 }
 
 
+
+
 async function createProduct(req, res) {
   try {
     const product = await Product.create(req.body);
@@ -136,7 +138,6 @@ async function renderInventoryPage(req, res) {
 }
 
 
-// controllers/productController.js
 
 async function deleteFromInventory(req, res) {
   try {
@@ -159,12 +160,6 @@ async function deleteFromInventory(req, res) {
     res.status(500).json({ message: err.message });
   }
 }
-
-
-
-
-
-
 
 
 
@@ -198,5 +193,5 @@ module.exports = {
   renderEditProductForm,
   addToInventory,
   renderInventoryPage,
-  deleteFromInventory
+  deleteFromInventory,
 };

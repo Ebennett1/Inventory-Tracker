@@ -51,6 +51,7 @@ const generateRandomProducts = async () => {
         const quantity = Math.floor(Math.random() * 100) + 1;
         products.push({ name, description, category: category._id, price, quantity });
         generatedNames.add(name);
+        console.log(`Generated product: ${name}, Category: ${category.name}`);
       }
     }
   } catch (err) {

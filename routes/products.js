@@ -15,4 +15,6 @@ router.delete('/inventory/delete/:id', productController.deleteFromInventory);
 
 
 
+
+
 module.exports = router;
