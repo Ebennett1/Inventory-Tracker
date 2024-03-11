@@ -30,6 +30,30 @@ function getRandomPrice(min, max) {
   return (Math.random() * (max - min) + min).toFixed(2);
 }
 
+// Generate random products without duplicates
+const generateRandomProducts = async () => {
+  const products = [];
+  try {
+    const categories = await Category.find();
+    const generatedNames = new Set(); // Keep track of generated names to avoid duplicates
+    while (products.length < 20) { // Generate 20 unique products
+      const name = productNames[Math.floor(Math.random() * productNames.length)];
+      if (!generatedNames.has(name)) {
+        const description = productDescriptions[Math.floor(Math.random() * productDescriptions.length)];
+        const category = categories[Math.floor(Math.random() * categories.length)];
+        const price = getRandomPrice(10, 300);
+        const quantity = Math.floor(Math.random() * 100) + 1;
+        products.push({ name, description, category: category._id, price, quantity });
+        generatedNames.add(name);
+        console.log(`Generated product: ${name}, Category: ${category.name}`);
+      }
+    }
+  } catch (err) {
+    console.error('Error generating random products:', err);
+  }
+  return products;
+};
+
 // Function to update categories with associated products
 const updateCategoriesWithProducts = async (products) => {
   try {
@@ -58,29 +82,7 @@ const updateCategoriesWithProducts = async (products) => {
   }
 };
 
-// Generate random products without duplicates
-const generateRandomProducts = async () => {
-  const products = [];
-  try {
-    const categories = await Category.find();
-    const generatedNames = new Set(); // Keep track of generated names to avoid duplicates
-    while (products.length < 20) { // Generate 20 unique products
-      const name = productNames[Math.floor(Math.random() * productNames.length)];
-      if (!generatedNames.has(name)) {
-        const description = productDescriptions[Math.floor(Math.random() * productDescriptions.length)];
-        const category = categories[Math.floor(Math.random() * categories.length)];
-        const price = getRandomPrice(10, 300);
-        const quantity = Math.floor(Math.random() * 100) + 1;
-        products.push({ name, description, category: category._id, price, quantity });
-        generatedNames.add(name);
-        console.log(`Generated product: ${name}, Category: ${category.name}`);
-      }
-    }
-  } catch (err) {
-    console.error('Error generating random products:', err);
-  }
-  return products;
-};
+
 
 // Reseed the database
 const reseedDatabase = async () => {

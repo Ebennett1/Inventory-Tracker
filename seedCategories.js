@@ -3,7 +3,6 @@
 const mongoose = require('mongoose');
 const Category = require('./models/category');
 const { updateCategoriesWithProducts } = require('./seed');
-const { generateRandomProducts } = require('./seed');
 require('dotenv').config();
 
 // Connect to MongoDB
