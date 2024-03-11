@@ -2,6 +2,8 @@
 
 const mongoose = require('mongoose');
 const Category = require('./models/category');
+const { updateCategoriesWithProducts } = require('./seed');
+const { generateRandomProducts } = require('./seed');
 require('dotenv').config();
 
 // Connect to MongoDB
@@ -24,6 +26,13 @@ async function seedCategories() {
     const categories = categoryNames.map(name => ({ name }));
     await Category.insertMany(categories); // Insert new categories
     console.log('Categories seeded successfully');
+
+    // Update categories with associated products
+    // First, generate random products
+    const { generateRandomProducts } = require('./seed'); // Import the function from seed.js
+    const products = await generateRandomProducts();
+    // Then, update categories with the generated products
+    await updateCategoriesWithProducts(products);
   } catch (err) {
     console.error('Error seeding categories:', err);
   } finally {

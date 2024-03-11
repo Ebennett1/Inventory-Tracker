@@ -1,3 +1,4 @@
+// controllers/categoryController.js
 const { Category } = require('../models');
 
 async function createCategory(req, res) {
@@ -18,14 +19,22 @@ async function getAllCategories(req, res) {
   }
 }
 
-
-async function getProductsByCategory(req, res) {
+async function getCategoryById(req, res, next) {
   try {
-    const categoryId = req.params.id;
-    const category = await Category.findById(categoryId).populate('products');
+    const category = await Category.findById(req.params.id).populate('products');
     if (!category) {
       return res.status(404).json({ message: 'Category not found' });
     }
+    res.locals.category = category; // Store category in res.locals
+    next();
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+}
+
+async function renderCategoryProducts(req, res) {
+  try {
+    const category = res.locals.category; // Retrieve category from res.locals
     res.render('categoryProducts', { category });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -33,19 +42,16 @@ async function getProductsByCategory(req, res) {
 }
 
 
-
-async function getCategoryById(req, res, next) {
-  let category;
+async function getProductsByCategory(req, res) {
   try {
-    category = await Category.findById(req.params.id);
+    const category = await Category.findById(req.params.id).populate('products');
     if (!category) {
       return res.status(404).json({ message: 'Category not found' });
     }
+    res.render('categoryProducts', { category });
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
-  res.category = category;
-  next();
 }
 
 async function updateCategory(req, res) {
@@ -73,7 +79,8 @@ module.exports = {
   createCategory,
   getAllCategories,
   getCategoryById,
+  renderCategoryProducts,
+  getProductsByCategory,
   updateCategory,
-  deleteCategory,
-  getProductsByCategory
+  deleteCategory
 };

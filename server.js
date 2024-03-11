@@ -56,7 +56,7 @@ app.listen(port, () => {
 
 // display products 
 // in said category
-
+//search bar function
 // Add Images--- Reseeding
 // Work on login/registration views and functionality
 // CSS

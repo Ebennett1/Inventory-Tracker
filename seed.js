@@ -25,16 +25,38 @@ const productDescriptions = [
   'Expandable storage', 'User-friendly interface', 'Stylish'
 ];
 
-const productCategories = [
-  'Electronics', 'Computers', 'Audio', 'Cameras', 'Wearables',
-  'Accessories', 'Gaming', 'Drones', 'Fitness', 'Storage',
-  'Peripherals', 'Networking', 'Printers', 'Projectors', 'Office Supplies'
-];
-
 // Define function to generate random price
 function getRandomPrice(min, max) {
   return (Math.random() * (max - min) + min).toFixed(2);
 }
+
+// Function to update categories with associated products
+const updateCategoriesWithProducts = async (products) => {
+  try {
+    // Retrieve all categories
+    const categories = await Category.find();
+
+    // Iterate over each product and update categories
+    for (const product of products) {
+      // Find the category associated with the product
+      const category = await Category.findById(product.category);
+      
+      // If the category is found, update its products array
+      if (category) {
+        category.products.push(product._id); // or product.id
+        await category.save(); // Save the category with the updated products array
+      } else {
+        console.error(`Category '${product.category}' not found for product '${product.name}'`);
+      }
+    }
+    console.log('Categories updated with associated products');
+  } catch (error) {
+    console.error('Error updating categories with associated products:', error);
+  } finally {
+    // Disconnect from MongoDB
+    mongoose.disconnect();
+  }
+};
 
 // Generate random products without duplicates
 const generateRandomProducts = async () => {
@@ -47,7 +69,7 @@ const generateRandomProducts = async () => {
       if (!generatedNames.has(name)) {
         const description = productDescriptions[Math.floor(Math.random() * productDescriptions.length)];
         const category = categories[Math.floor(Math.random() * categories.length)];
-        const price = getRandomPrice(10, 1000);
+        const price = getRandomPrice(10, 300);
         const quantity = Math.floor(Math.random() * 100) + 1;
         products.push({ name, description, category: category._id, price, quantity });
         generatedNames.add(name);
@@ -60,16 +82,21 @@ const generateRandomProducts = async () => {
   return products;
 };
 
-
 // Reseed the database
 const reseedDatabase = async () => {
   try {
     // Clear existing data
     await Product.deleteMany();
+
     // Generate new products
     const products = await generateRandomProducts();
+
     // Insert new products into the database
     await Product.insertMany(products);
+
+    // Update categories with associated products
+    await updateCategoriesWithProducts(products);
+
     console.log('Database reseeded successfully.');
   } catch (error) {
     console.error('Error reseeding database:', error);
@@ -81,3 +108,8 @@ const reseedDatabase = async () => {
 
 // Execute the reseeding function
 reseedDatabase();
+
+module.exports = {
+  updateCategoriesWithProducts,
+  generateRandomProducts
+};
