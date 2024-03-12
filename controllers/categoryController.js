@@ -59,21 +59,21 @@ async function renderCategoryProducts(req, res) {
 
 
 
-async function getProductsByCategory(req, res) {
-  try {
-    const categoryId = req.params.id;
-    const products = await Product.find({ category: categoryId });
+// async function getProductsByCategory(req, res) {
+//   try {
+//     const categoryId = req.params.id;
+//     const products = await Product.find({ category: categoryId });
 
-    if (!products || products.length === 0) {
-      return res.status(404).json({ message: 'No products found for this category' });
-    }
-    const category = res.locals.category;
+//     if (!products || products.length === 0) {
+//       return res.status(404).json({ message: 'No products found for this category' });
+//     }
+//     const category = res.locals.category;
 
-    res.render('categoryProducts', { category, products });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-}
+//     res.render('categoryProducts', { category, products });
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// }
 
 
 
@@ -103,7 +103,7 @@ module.exports = {
   getAllCategories,
   getCategoryById,
   renderCategoryProducts,
-  getProductsByCategory,
+  // getProductsByCategory,
   updateCategory,
   deleteCategory
 };

@@ -36,7 +36,20 @@ const generateRandomProducts = async () => {
   try {
     const categories = await Category.find();
     const generatedNames = new Set(); // Keep track of generated names to avoid duplicates
-    while (products.length < 20) { // Generate 20 unique products
+    
+    // Generate one product for each category
+    for (const category of categories) {
+      const name = productNames[Math.floor(Math.random() * productNames.length)];
+      const description = productDescriptions[Math.floor(Math.random() * productDescriptions.length)];
+      const price = getRandomPrice(10, 300);
+      const quantity = Math.floor(Math.random() * 100) + 1;
+      products.push({ name, description, category: category._id, price, quantity });
+      generatedNames.add(name);
+      console.log(`Generated product: ${name}, Category: ${category.name}`);
+    }
+
+    // Generate additional random products
+    while (products.length < 20) { // Generate a total of 20 products
       const name = productNames[Math.floor(Math.random() * productNames.length)];
       if (!generatedNames.has(name)) {
         const description = productDescriptions[Math.floor(Math.random() * productDescriptions.length)];
@@ -76,13 +89,8 @@ const updateCategoriesWithProducts = async (products) => {
     console.log('Categories updated with associated products');
   } catch (error) {
     console.error('Error updating categories with associated products:', error);
-  } finally {
-    // Disconnect from MongoDB
-    mongoose.disconnect();
   }
 };
-
-
 
 // Reseed the database
 const reseedDatabase = async () => {
@@ -103,7 +111,7 @@ const reseedDatabase = async () => {
   } catch (error) {
     console.error('Error reseeding database:', error);
   } finally {
-    // Disconnect from MongoDB
+    // Disconnect from MongoDB after all operations are completed
     mongoose.disconnect();
   }
 };

@@ -7,7 +7,7 @@ router.get('/', categoryController.getAllCategories);
 
 // Combine getCategoryById and renderCategoryProducts into a single route
 router.get('/:id', categoryController.getCategoryById, categoryController.renderCategoryProducts);
-router.get('/categories/:id/products', categoryController.getProductsByCategory);
+// router.get('/categories/:id/products', categoryController.getProductsByCategory);
 router.patch('/:id', categoryController.getCategoryById, categoryController.updateCategory);
 router.delete('/:id', categoryController.getCategoryById, categoryController.deleteCategory);
 
