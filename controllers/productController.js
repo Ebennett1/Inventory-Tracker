@@ -5,7 +5,7 @@ const { Product, Category } = require('../models');
 async function renderAddProductForm(req, res) {
   try {
     const categories = await Category.find(); 
-    res.render('addProductForm', { title: 'Add Product', categories, body: {} });
+    res.render('addProductForm', { title: 'Add Product', categories, body: 'Add Product' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -29,7 +29,7 @@ async function getAllProducts(req, res) {
   try {
     const products = await Product.find().populate('category');
     console.log(JSON.stringify(products, null, 2));
-    res.render('productList', { products, body: {} });
+    res.render('productList', { products, body: 'Product List' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

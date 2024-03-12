@@ -1,5 +1,5 @@
 // controllers/categoryController.js
-const { Category } = require('../models');
+const { Category, Product } = require('../models');
 
 async function createCategory(req, res) {
   try {
@@ -13,7 +13,7 @@ async function createCategory(req, res) {
 async function getAllCategories(req, res) {
   try {
     const categories = await Category.find();
-    res.render('categoryList', { categories, body: {} })
+    res.render('categoryList', { categories, body: "Categories" })
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -34,25 +34,48 @@ async function getCategoryById(req, res, next) {
 
 async function renderCategoryProducts(req, res) {
   try {
-    const category = res.locals.category; // Retrieve category from res.locals
-    res.render('categoryProducts', { category });
+    const categoryId = req.params.id;
+    console.log("Category ID:", categoryId); // Log the category ID
+
+    const category = res.locals.category;
+    console.log("Category:", category); // Log the category object
+
+    const products = await Product.find({ category: categoryId });
+    console.log("Products:", products); // Log the products associated with the category
+
+    if (!category || !products || products.length === 0) {
+      return res.status(404).json({ message: 'Category or products not found' });
+    }
+
+    res.render('categoryProducts', { category, products });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: err.message });
   }
 }
+
+
+
+
 
 
 async function getProductsByCategory(req, res) {
   try {
-    const category = await Category.findById(req.params.id).populate('products');
-    if (!category) {
-      return res.status(404).json({ message: 'Category not found' });
+    const categoryId = req.params.id;
+    const products = await Product.find({ category: categoryId });
+
+    if (!products || products.length === 0) {
+      return res.status(404).json({ message: 'No products found for this category' });
     }
-    res.render('categoryProducts', { category });
+    const category = res.locals.category;
+
+    res.render('categoryProducts', { category, products });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 }
+
+
 
 async function updateCategory(req, res) {
   try {

@@ -3,6 +3,7 @@ const db = require('./models');
 const path = require('path');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const Product = require('./models/product');
 const app = express();
 const port = 3000;
 
@@ -36,6 +37,20 @@ app.get('/dashboard', (req, res) => {
   res.render('dashboard', { title: 'Dashboard', body: 'Dashboard content goes here' });
 });
 
+// Backend route to handle search queries
+app.get('/search', async (req, res) => {
+  try {
+    const query = req.query.q; // Assuming the search query is passed as 'q' parameter
+    // Perform search operation in the database based on the query
+    const searchResults = await Product.find({ $text: { $search: query } });
+    res.render('dashboard', { title: 'Dashboard', searchResults, body: {} }); // Pass search results to the dashboard page
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
+
 
 
 // Error handling middleware
@@ -55,9 +70,9 @@ app.listen(port, () => {
 //Next steps 
 
 // display products 
-// in said category
-//search bar function
-// Add Images--- Reseeding
+// in said category----- products not rendering
+//search bar function--- not getting products back, just dashboard view
+// Add Images--- API
 // Work on login/registration views and functionality
 // CSS
 // CheckList
