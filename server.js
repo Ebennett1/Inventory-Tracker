@@ -4,6 +4,12 @@ const path = require('path');
 const methodOverride = require('method-override');
 const Product = require('./models/product');
 const productController = require('./controllers/productController');
+const userController = require('./controllers/userController');
+const session = require('express-session')
+const sessionsController = require('./controllers/sessionsController.js')
+
+
+
 const app = express();
 const port = 3000;
 
@@ -22,11 +28,21 @@ app.use(methodOverride('_method')); // Allows using other HTTP methods such as P
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
 app.use(express.static(path.join(__dirname, 'public'))); // Middleware to serve static files
+app.use(
+  session({
+    secret: process.env.SECRET_KEY, 
+    resave: false, 
+    saveUninitialized: false 
+  })
+)
+
+
 
 // Routes
-app.use('/api/users', usersRouter);
+app.use('/users', usersRouter);
 app.use('/products', productsRouter);
 app.use('/categories', categoriesRouter);
+app.use('/sessions', sessionsController)
 
 // EJS setup
 app.set('view engine', 'ejs');
@@ -74,3 +90,12 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log(`App Running on port: ${port}`);
 });
+
+
+
+// in said category----- products not rendering
+// Add Images--- API---not getting images just ---  
+// {"message": "Failed to fetch product images"}
+// Work on login/registration views and functionality
+// CSS
+// CheckList

@@ -1,13 +1,19 @@
 const { User } = require('../models');
+const router = require('express').Router()
+const bcrypt = require('bcrypt')
 
-async function createUser(req, res) {
-  try {
-    const user = await User.create(req.body);
-    res.status(201).json(user);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-}
+
+router.get('/new', (req, res) => {
+  res.render('users/new')
+})
+
+
+router.post('/', async (req, res) => {
+ req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
+ const newUser = await User.create(req.body)
+ console.log(newUser)
+ res.redirect('/')
+})
 
 async function getAllUsers(req, res) {
   try {
@@ -57,7 +63,7 @@ async function deleteUser(req, res) {
 }
 
 module.exports = {
-  createUser,
+  // createUser,
   getAllUsers,
   getUserById,
   updateUser,

@@ -14,7 +14,6 @@ async function renderAddProductForm(req, res) {
 
 
 
-
 async function createProduct(req, res) {
   try {
     const product = await Product.create(req.body);
@@ -146,7 +145,7 @@ async function renderInventoryPage(req, res) {
     const inventory = await Product.find({ addedToInventory: true });
 
     // Render the inventory page with products that are added to inventory
-    res.render('inventory', { inventory });
+    res.render('inventory', { inventory, body: 'Inventory' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

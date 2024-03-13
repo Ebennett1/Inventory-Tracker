@@ -47,7 +47,7 @@ async function renderCategoryProducts(req, res) {
       return res.status(404).json({ message: 'Category or products not found' });
     }
 
-    res.render('categoryProducts', { category, products });
+    res.render('categoryProducts', { category, products, body: {} });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: err.message });
