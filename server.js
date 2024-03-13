@@ -1,15 +1,19 @@
+// Import necessary modules
 const express = require('express');
-const db = require('./models');
 const path = require('path');
-const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const Product = require('./models/product');
+const productController = require('./controllers/productController');
 const app = express();
 const port = 3000;
 
+// Import routers
 const usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products');
 const categoriesRouter = require('./routes/categories');
+
+
+
 
 
 
@@ -18,23 +22,19 @@ app.use(methodOverride('_method')); // Allows using other HTTP methods such as P
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
 app.use(express.static(path.join(__dirname, 'public'))); // Middleware to serve static files
+
 // Routes
 app.use('/api/users', usersRouter);
 app.use('/products', productsRouter);
 app.use('/categories', categoriesRouter);
 
-
-
-
 // EJS setup
 app.set('view engine', 'ejs');
-
 app.set('views', path.join(__dirname, 'views'));
-
 
 // Sample route
 app.get('/dashboard', (req, res) => {
-  res.render('dashboard', { title: 'Dashboard', body: 'Dashboard content goes here' });
+  res.render('dashboard', { title: 'Dashboard', body: 'Dashboard' });
 });
 
 // Backend route to handle search queries
@@ -43,7 +43,8 @@ app.get('/search', async (req, res) => {
     const query = req.query.q; // Assuming the search query is passed as 'q' parameter
     // Perform search operation in the database based on the query
     const searchResults = await Product.find({ $text: { $search: query } });
-    res.render('dashboard', { title: 'Dashboard', searchResults, body: {} }); // Pass search results to the dashboard page
+    // Render the searchResults.ejs view with the search results
+    res.render('searchResults', { title: 'Search Results', searchResults, body: {} });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -52,6 +53,16 @@ app.get('/search', async (req, res) => {
 
 
 
+// Backend route to fetch image URLs for products
+app.get('/products/:id', async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const productImages = await productController.fetchProductImages(productId); // Use the function from the product controller
+    res.json(productImages);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -63,16 +74,3 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log(`App Running on port: ${port}`);
 });
-
-
-
-
-//Next steps 
-
-// display products 
-// in said category----- products not rendering
-//search bar function--- not getting products back, just dashboard view
-// Add Images--- API
-// Work on login/registration views and functionality
-// CSS
-// CheckList

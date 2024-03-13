@@ -1,0 +1,13 @@
+<%- include('layout', { title: 'Search Results' }) %>
+
+<h2>Search Results</h2>
+
+<% if (searchResults && searchResults.length > 0) { %>
+  <ul>
+    <% searchResults.forEach(product => { %>
+      <li><%= product.name %>: <%= product.description %></li>
+    <% }) %>
+  </ul>
+<% } else { %>
+  <p>No search results found.</p>
+<% } %>

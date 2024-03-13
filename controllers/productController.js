@@ -1,5 +1,6 @@
 // controllers/productController.js
 const { Product, Category } = require('../models');
+const axios = require('axios');
 
 
 async function renderAddProductForm(req, res) {
@@ -35,14 +36,28 @@ async function getAllProducts(req, res) {
   }
 }
 
+async function fetchProductImages() {
+  try {
+    const response = await axios.get('https://www.googleapis.com/customsearch/v1?key=AIzaSyA6zxpryIxseH_HehsvUwnXAsw17Y4Fl-4&cx=970cff896f94f4ba1&q=query');
+    console.log(response.data);
+    return response.data; // Assuming the response contains image URLs in JSON format
+  } catch (error) {
+    throw new Error('Failed to fetch product images');
+  }
+}
 
+
+// Update getProductById function in productController.js to fetch images for the product
 async function getProductById(req, res) {
   try {
-    const product = await Product.findById(req.params.id).populate('category');
+    const productId = req.params.id;
+    const product = await Product.findById(productId).populate('category');
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
-    res.render('productDetails',  { product, body: {} } );
+    // Fetch images for the product
+    const productImages = await fetchProductImages(productId);
+    res.render('productDetails', { product, productImages, body: {} });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -186,6 +201,7 @@ async function deleteProduct(req, res) {
 module.exports = {
   createProduct,
   getAllProducts,
+  fetchProductImages,
   getProductById,
   updateProduct,
   deleteProduct,
