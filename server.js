@@ -93,7 +93,7 @@ app.listen(port, () => {
 
 
 
-// in said category----- products not rendering
+// In said category----- products not rendering
 // Add Images--- API---not getting images just ---  
 // {"message": "Failed to fetch product images"}
 // Work on login/registration views and functionality
