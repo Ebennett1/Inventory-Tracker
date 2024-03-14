@@ -24,7 +24,9 @@ const productSchema = new mongoose.Schema({
   addedToInventory: {
     type: Boolean,
     default: false
-  }
+  },
+
+  user: { type: mongoose.Types.ObjectId, ref: 'User'}
 });
 
 

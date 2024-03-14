@@ -35,6 +35,7 @@ app.use(
     saveUninitialized: false 
   })
 )
+// app.use(isAuthenticated)
 
 
 
@@ -50,7 +51,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Sample route
 app.get('/dashboard', (req, res) => {
-  res.render('dashboard', { title: 'Dashboard', body: 'Dashboard' });
+  res.render('dashboard', { title: 'Dashboard', body: 'Dashboard', currentUser: req.session.currentUser });
 });
 
 // Backend route to handle search queries
@@ -60,7 +61,7 @@ app.get('/search', async (req, res) => {
     // Perform search operation in the database based on the query
     const searchResults = await Product.find({ $text: { $search: query } });
     // Render the searchResults.ejs view with the search results
-    res.render('searchResults', { title: 'Search Results', searchResults, body: {} });
+    res.render('searchResults', { title: 'Search Results', searchResults, body: {}, currentUser: req.session.currentUser });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

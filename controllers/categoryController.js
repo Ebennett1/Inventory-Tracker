@@ -13,7 +13,7 @@ async function createCategory(req, res) {
 async function getAllCategories(req, res) {
   try {
     const categories = await Category.find();
-    res.render('categoryList', { categories, body: "Categories" })
+    res.render('categoryList', { categories, body: "Categories", currentUser: req.session.currentUser })
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -47,7 +47,7 @@ async function renderCategoryProducts(req, res) {
       return res.status(404).json({ message: 'Category or products not found' });
     }
 
-    res.render('categoryProducts', { category, products, body: {} });
+    res.render('categoryProducts', { category, products, body: {},currentUser: req.session.currentUser  });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: err.message });

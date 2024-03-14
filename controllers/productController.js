@@ -1,24 +1,26 @@
 // controllers/productController.js
 const { Product, Category } = require('../models');
 const axios = require('axios');
+const isAuthenticated = require('../controllers/isAuthenticated');
 
 
 async function renderAddProductForm(req, res) {
   try {
     const categories = await Category.find(); 
-    res.render('addProductForm', { title: 'Add Product', categories, body: 'Add Product' });
+    res.render('addProductForm', { title: 'Add Product', categories, body: 'Add Product', currentUser: req.session.currentUser });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 }
 
 
-
 async function createProduct(req, res) {
   try {
+    console.log(req.session)
+    req.body.user = req.session.currentUser.id
     const product = await Product.create(req.body);
      // Redirect to the details page of the newly created product
-     res.redirect(`/products/${product._id}`);
+     res.redirect(`/products/${product._id}`, { currentUser: req.session.currentUser } );
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -27,13 +29,15 @@ async function createProduct(req, res) {
 
 async function getAllProducts(req, res) {
   try {
-    const products = await Product.find().populate('category');
+    // Retrieve products associated with the current user
+    const products = await Product.find({ user: req.session.currentUser.id }).populate('category');
     console.log(JSON.stringify(products, null, 2));
-    res.render('productList', { products, body: 'Product List' });
+    res.render('productList', { products, body: 'Product List', currentUser: req.session.currentUser  });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 }
+
 
 async function fetchProductImages() {
   try {
@@ -56,7 +60,7 @@ async function getProductById(req, res) {
     }
     // Fetch images for the product
     const productImages = await fetchProductImages(productId);
-    res.render('productDetails', { product, productImages, body: {} });
+    res.render('productDetails', { product, productImages, body: {}, currentUser: req.session.currentUser   });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -84,7 +88,7 @@ async function updateProduct(req, res) {
     }
 
     // Redirect to the updated product details page
-    res.redirect(`/products/${updatedProduct._id}`);
+    res.redirect(`/products/${updatedProduct._id}`, { currentUser: req.session.currentUser });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -105,7 +109,7 @@ async function renderEditProductForm(req, res) {
     const categories = await Category.find();
 
     // Render the edit product form view
-    res.render('editProductForm', { title: 'Edit Product', product, categories });
+    res.render('editProductForm', { title: 'Edit Product', product, categories,  currentUser: req.session.currentUser  });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -131,7 +135,7 @@ async function addToInventory(req, res) {
     await product.save();
 
     // Redirect the user to the inventory page after adding the product
-    res.redirect('/products/inventory');
+    res.redirect('/products/inventory', { currentUser: req.session.currentUser });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -145,7 +149,7 @@ async function renderInventoryPage(req, res) {
     const inventory = await Product.find({ addedToInventory: true });
 
     // Render the inventory page with products that are added to inventory
-    res.render('inventory', { inventory, body: 'Inventory' });
+    res.render('inventory', { inventory, body: 'Inventory',  currentUser: req.session.currentUser  });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -169,7 +173,7 @@ async function deleteFromInventory(req, res) {
     await product.save();
 
     // Redirect the user to the inventory page after deleting the product
-    res.redirect('/products/inventory');
+    res.redirect('/products/inventory', { currentUser: req.session.currentUser } );
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -191,7 +195,7 @@ async function deleteProduct(req, res) {
     }
 
   // Redirect to the product list page
-  res.redirect('/products');
+  res.redirect('/products', { currentUser: req.session.currentUser } );
 } catch (err) {
   res.status(500).json({ message: err.message });
 }

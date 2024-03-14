@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
+const isAuthenticated = require('../controllers/isAuthenticated');
+router.use(isAuthenticated)
 
 router.post('/inventory/add', productController.addToInventory);
 router.get('/inventory', productController.renderInventoryPage);

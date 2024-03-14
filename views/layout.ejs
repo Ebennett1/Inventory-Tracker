@@ -16,6 +16,19 @@
                 <li><a href="/products/add">Add Product</a></li>
                 <li><a href="/products/inventory">Inventory</a></li>
                 <li><a href="/categories">Categories</a></li>
+                <% if (currentUser){  %>
+                    <li>Welcome <%= currentUser.username %></li>
+                    
+                    <li>
+                        <form action="/sessions?_method=DELETE" method="POST">
+                          <input type="submit" value="Log Out" />
+                        </form>
+                      </li>
+               <%  } else { %>
+                <li><a class="nav-link" href="/users/new">Sign Up</a></li>
+                <li><a class="nav-link" href="/sessions/new">Log In</a></li>
+             <% } %>
+
             </ul>
         </nav>
 
