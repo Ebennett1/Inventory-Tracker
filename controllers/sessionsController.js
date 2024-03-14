@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const User = require('../models/user');
-const userController = require('../controllers/userController');
+// const userController = require('../controllers/userController');
 const router = require('express').Router()
 
 
@@ -45,7 +45,7 @@ router.post('/', async (req, res) => {
 
 router.delete('/', (req, res) => {
   req.session.destroy(() => {
-    res.redirect('/')
+    res.redirect('sessions/new')
   })
 })
 

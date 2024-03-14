@@ -3,6 +3,21 @@ const router = require('express').Router()
 const bcrypt = require('bcrypt')
 
 
+
+router.get('/new', (req, res) => {
+  res.render('users/new', )
+})
+
+
+router.post('/', async (req, res) => {
+ req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
+ const newUser = await User.create(req.body)
+ console.log(newUser)
+ res.redirect('/')
+})
+
+
+
 async function createUser(req, res) {
   try {
     // Hash the password with a salt complexity level of 10
@@ -15,18 +30,6 @@ async function createUser(req, res) {
 }
 
 
-
-router.get('/new', (req, res) => {
-  res.render('users/new')
-})
-
-
-router.post('/', async (req, res) => {
- req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
- const newUser = await User.create(req.body)
- console.log(newUser)
- res.redirect('/')
-})
 
 async function getAllUsers(req, res) {
   try {
