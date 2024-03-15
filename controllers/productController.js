@@ -20,7 +20,7 @@ async function createProduct(req, res) {
     req.body.user = req.session.currentUser.id
     const product = await Product.create(req.body);
      // Redirect to the details page of the newly created product
-     res.redirect(`/products/${product._id}`, { currentUser: req.session.currentUser } );
+     res.redirect(`/products/${product._id}`);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -39,15 +39,44 @@ async function getAllProducts(req, res) {
 }
 
 
-async function fetchProductImages() {
-  try {
-    const response = await axios.get('https://www.googleapis.com/customsearch/v1?key=AIzaSyA6zxpryIxseH_HehsvUwnXAsw17Y4Fl-4&cx=970cff896f94f4ba1&q=query');
-    console.log(response.data);
-    return response.data; // Assuming the response contains image URLs in JSON format
-  } catch (error) {
-    throw new Error('Failed to fetch product images');
-  }
-}
+
+
+
+// async function fetchProductImages() {
+//   try {
+//     const productNames = [
+//       'Smartphone', 'Laptop', 'Headphones', 'Camera', 'Smartwatch',
+//       'Tablet', 'Bluetooth Speaker', 'Gaming Console', 'Drone', 'Fitness Tracker',
+//       'Wireless Earbuds', 'Portable Charger', 'External Hard Drive', 'Monitor',
+//       'Printer', 'Projector', 'Router', 'Keyboard', 'Mouse', 'Graphics Card'
+//     ];
+
+//     const productImages = [];
+
+//     for (const productName of productNames) {
+//       const response = await axios.get(`https://www.googleapis.com/customsearch/v1?key=AIzaSyA6zxpryIxseH_HehsvUwnXAsw17Y4Fl-4&cx=970cff896f94f4ba1&q=${productName}&searchType=image`);
+
+//       // Check if there are items in the response
+//       if (response.data.items && response.data.items.length > 0) {
+//         // Get the first image link for the product
+//         const firstImageLink = response.data.items[0].link;
+//         productImages.push({ productName, imageLink: firstImageLink });
+//       } else {
+//         console.log(`No image found for product: ${productName}`);
+//       }
+//     }
+
+//     return productImages;
+//   } catch (error) {
+//     console.log(error.message);
+//     throw new Error('Failed to fetch product images');
+//   }
+// }
+
+
+
+
+
 
 
 // Update getProductById function in productController.js to fetch images for the product
@@ -58,9 +87,9 @@ async function getProductById(req, res) {
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
-    // Fetch images for the product
-    const productImages = await fetchProductImages(productId);
-    res.render('productDetails', { product, productImages, body: {}, currentUser: req.session.currentUser   });
+    // // Fetch images for the product
+    // const productImages = await fetchProductImages(productId);
+    res.render('productDetails', { product,  body: {}, currentUser: req.session.currentUser   });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -88,7 +117,7 @@ async function updateProduct(req, res) {
     }
 
     // Redirect to the updated product details page
-    res.redirect(`/products/${updatedProduct._id}`, { currentUser: req.session.currentUser });
+    res.redirect(`/products/${updatedProduct._id}`);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -109,7 +138,7 @@ async function renderEditProductForm(req, res) {
     const categories = await Category.find();
 
     // Render the edit product form view
-    res.render('editProductForm', { title: 'Edit Product', product, categories,  currentUser: req.session.currentUser  });
+    res.render('editProductForm', { title: 'Edit Product', product, categories, body: {} ,  currentUser: req.session.currentUser  });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -128,14 +157,14 @@ async function addToInventory(req, res) {
     }
 
     // Update the product's quantity
-    product.quantity += parseInt(quantityToAdd, 10); // Parse quantityToAdd as integer
+    product.quantity -= parseInt(quantityToAdd, 10); // Parse quantityToSubtract as integer
     // Mark the product as added to inventory
     product.addedToInventory = true;
     // Save the updated product to the database
     await product.save();
 
     // Redirect the user to the inventory page after adding the product
-    res.redirect('/products/inventory', { currentUser: req.session.currentUser });
+    res.redirect('/products/inventory');
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -173,7 +202,7 @@ async function deleteFromInventory(req, res) {
     await product.save();
 
     // Redirect the user to the inventory page after deleting the product
-    res.redirect('/products/inventory', { currentUser: req.session.currentUser } );
+    res.redirect('/products/inventory');
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -195,7 +224,7 @@ async function deleteProduct(req, res) {
     }
 
   // Redirect to the product list page
-  res.redirect('/products', { currentUser: req.session.currentUser } );
+  res.redirect('/products');
 } catch (err) {
   res.status(500).json({ message: err.message });
 }
@@ -204,7 +233,7 @@ async function deleteProduct(req, res) {
 module.exports = {
   createProduct,
   getAllProducts,
-  fetchProductImages,
+  // fetchProductImages,
   getProductById,
   updateProduct,
   deleteProduct,

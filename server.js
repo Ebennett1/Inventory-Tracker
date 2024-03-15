@@ -71,15 +71,15 @@ app.get('/search', async (req, res) => {
 
 
 // Backend route to fetch image URLs for products
-app.get('/products/:id', async (req, res) => {
-  try {
-    const productId = req.params.id;
-    const productImages = await productController.fetchProductImages(productId); // Use the function from the product controller
-    res.json(productImages);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
+// app.get('/products/:id/images', async (req, res) => {
+//   try {
+//     const productId = req.params.id;
+//     const productImages = await productController.fetchProductImages(productId); // Use the function from the product controller
+//     res.json(productImages);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -94,9 +94,8 @@ app.listen(port, () => {
 
 
 
-// In said category----- products not rendering
-// Add Images--- API---not getting images just ---  
-// {"message": "Failed to fetch product images"}
-//   }
+
+// Add Images--- API---not getting images just img links ---  
+
 // CSS
 // CheckList
