@@ -97,9 +97,6 @@ app.listen(port, () => {
 // In said category----- products not rendering
 // Add Images--- API---not getting images just ---  
 // {"message": "Failed to fetch product images"}
-// Sign up page not rendering
-// {
-//   "message": "Cast to ObjectId failed for value \"new\" (type string) at path \"_id\" for model \"User\""
 //   }
 // CSS
 // CheckList

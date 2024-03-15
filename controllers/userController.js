@@ -4,9 +4,6 @@ const bcrypt = require('bcrypt')
 
 
 
-router.get('/new', (req, res) => {
-  res.render('users/new', )
-})
 
 
 router.post('/', async (req, res) => {

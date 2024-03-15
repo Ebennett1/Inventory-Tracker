@@ -4,6 +4,10 @@ const userController = require('../controllers/userController');
 
 router.post('/', userController.createUser);
 router.get('/', userController.getAllUsers);
+router.get('/new', (req, res) => {
+  res.render('users/new', )
+})
+
 router.get('/:id', userController.getUserById, (req, res) => {
   res.json(res.user);
 });

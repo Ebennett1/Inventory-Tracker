@@ -15,7 +15,7 @@ router.put('/edit/:id', productController.updateProduct);
 router.delete('/:id', productController.deleteProduct);
 router.delete('/inventory/delete/:id', productController.deleteFromInventory);
 
-
+router.get('/:id/images', productController.fetchProductImages);
 
 
 
