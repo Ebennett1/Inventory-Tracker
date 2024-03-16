@@ -3,10 +3,11 @@
 
 Welcome to Inventory Tracker, a web application designed to help you manage your inventory efficiently. This README will guide you through setting up and using the application.
 
+![Inventory Tracker](https://i.imgur.com/t30inzW.png)
 
 
 
-You can check out the live demo of the Inventory Tracker [https://inventorytracker-c7cdf5d6ae57.herokuapp.com/sessions/new](Here).
+You can check out the live demo of the Inventory Tracker [Here](https://inventorytracker-c7cdf5d6ae57.herokuapp.com/sessions/new).
 
 ## Features
 
