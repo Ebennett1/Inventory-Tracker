@@ -15,7 +15,7 @@ You can check out the live demo of the Inventory Tracker [Here](https://inventor
 - User authentication for secure access.
 - CRUD functionality for adding, updating, and deleting products.
 - Basic product details (name, quantity, category) displayed in a list.
-- Search functionality by name or category.
+- Search functionality by product name.
 - Data validation to prevent input errors.
 - Product categorization by type or department.
 - Deployment on a hosting platform.
