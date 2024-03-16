@@ -6,7 +6,7 @@ Welcome to Inventory Tracker, a web application designed to help you manage your
 
 
 
-You can check out the live demo of the Inventory Tracker [here]().
+You can check out the live demo of the Inventory Tracker [https://inventorytracker-c7cdf5d6ae57.herokuapp.com/sessions/new](Here).
 
 ## Features
 
