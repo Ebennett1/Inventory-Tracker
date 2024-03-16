@@ -1,12 +1,14 @@
-<!-- categoryProducts.ejs -->
 <%- include('layout', { title: 'Category Products' }) %>
-    <h1><%= category.name %> Products</h1>
+<h1><%= category.name %> Products</h1>
 
-    <ul>
-        <% products.forEach(product => { %>
-            <li><%= product.name %></li>
-        <% }); %>
-    </ul>
+<ul>
+    <% products.forEach(product => { %>
+        <li>
+            <strong>Name:</strong> <%= product.name %><br>
+            <strong>Price:</strong> $<%= product.price %><br>
+            <strong>Quantity:</strong> <%= product.quantity %><br>
+        </li>
+    <% }); %>
+</ul>
 
-
-    <a href="/categories">Back to categories List</a>
+<a href="/categories">Back to Categories List</a>

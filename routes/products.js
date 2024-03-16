@@ -13,8 +13,8 @@ router.get('/', productController.getAllProducts);
 router.get('/:id/edit', productController.renderEditProductForm);
 router.get('/:id', productController.getProductById);
 router.put('/edit/:id', isDataOwner, productController.updateProduct);
-router.delete('/:id',  productController.deleteProduct);
-router.delete('/inventory/delete/:id', isDataOwner, productController.deleteFromInventory);
+router.delete('/:id', isDataOwner,  productController.deleteProduct);
+router.delete('/inventory/delete/:id',  productController.deleteFromInventory);
 
 // router.get('/:id/images', productController.fetchProductImages);
 

@@ -89,7 +89,7 @@ async function getProductById(req, res) {
     }
     // // Fetch images for the product
     // const productImages = await fetchProductImages(productId);
-    res.render('productDetails', { product,  body: {}, currentUser: req.session.currentUser   });
+    res.render('productDetails', { product,  body: 'Product Details', currentUser: req.session.currentUser   });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

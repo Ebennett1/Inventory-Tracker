@@ -17,15 +17,12 @@
                 <li><a href="/products/inventory">Inventory</a></li>
                 <li><a href="/categories">Categories</a></li>
                 <% if (currentUser){  %>
-                    <li>Welcome <%= currentUser.username %></li>
+                    <li class="welcomeGreet">Welcome <%= currentUser.username %></li>
                     
                     <li>
                         <form action="/sessions?_method=DELETE" method="POST">
                           <input type="submit" value="Log Out" />
                         </form>
-
-                        <!-- <li><a href="/users/new">Sign Up</a></li>
-                        <li><a href="/sessions/new">Log In</a></li> -->
                       </li>
                <% } else { %>
 

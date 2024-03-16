@@ -95,7 +95,6 @@ app.listen(port, () => {
 
 
 
-// Add Images--- API---not getting images just img links ---  
-
+// Add Images--- API--- getting img links ---  
 // CSS
 // CheckList

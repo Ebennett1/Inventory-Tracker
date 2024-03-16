@@ -5,9 +5,17 @@
 <% if (searchResults && searchResults.length > 0) { %>
   <ul>
     <% searchResults.forEach(product => { %>
-      <li><%= product.name %>: <%= product.description %></li>
+      <li>
+        <strong>Name:</strong> <%= product.name %><br>
+        <strong>Description:</strong> <%= product.description %><br>
+        <strong>Price:</strong> $<%= product.price %><br>
+        <strong>Quantity:</strong> <%= product.quantity %><br>
+      </li>
     <% }) %>
   </ul>
 <% } else { %>
   <p>No search results found.</p>
 <% } %>
+
+
+<a href="/dashboard">Back to Dashboard</a>
