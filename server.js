@@ -53,7 +53,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 
 app.get('/', (req, res) => {
-  res.redirect('sessions/new.ejs')
+  res.redirect('sessions/new')
 })
 
 
