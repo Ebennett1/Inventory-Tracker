@@ -49,6 +49,16 @@ app.use('/sessions', sessionsController)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+
+
+
+app.get('/', (req, res) => {
+  res.redirect('sessions/new.ejs')
+})
+
+
+
+
 // Sample route
 app.get('/dashboard', (req, res) => {
   res.render('dashboard', { title: 'Dashboard', body: 'Dashboard', currentUser: req.session.currentUser });
