@@ -54,9 +54,12 @@ git clone https://github.com/Ebennett1/Inventory-Tracker.git
 
 The Inventory Tracker project uses the following technologies:
 
-- 
-- 
-- 
+- Node.js
+- Mongoose
+- Express
+- EJS
+- CSS
+
 
 # User Stories
 
@@ -127,5 +130,7 @@ Feel free to reach out if you have questions, suggestions, or just want to chat!
 - https://imgur.com/ : For image URL retrieval
 
 - https://chat.openai.com/ : For Questions & debugging
+
+- https://developers.google.com/custom-search/v1/overview : Search API
 
 - https://www.markdownguide.org/cheat-sheet/ :For Completion of README.md
